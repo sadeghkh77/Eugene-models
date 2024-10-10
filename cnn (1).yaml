@@ -1,0 +1,29 @@
+module: SequenceModule
+model:
+  model_name: CNNalaJoresModified
+  arch_name: CNN
+  arch:
+    input_len: 170
+    output_dim: 1
+    conv_kwargs:
+      input_channels: 4
+      conv_channels: [128, 256, 512]  # Increased complexity in conv layers
+      conv_kernels: [5, 7, 13]  # Varied kernel sizes
+      conv_strides: [1, 1, 1]
+      pool_kernels: [2, 2, 2]
+      pool_strides: [2, 2, 2]
+      dropout_rates: 0.4  # Increased dropout for regularization
+      batchnorm: True
+      activations: relu
+    dense_kwargs:
+      hidden_dims: [128, 64]  # Added another dense layer
+      dropout_rates: 0.3  # Increased dropout in dense layer
+      batchnorm: True
+task: regression
+loss_fxn: mse
+optimizer: adam
+optimizer_lr: 0.001
+scheduler: reduce_lr_on_plateau
+scheduler_monitor: val_loss_epoch
+scheduler_kwargs:
+  patience: 2
